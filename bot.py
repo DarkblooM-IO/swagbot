@@ -7,7 +7,7 @@ from lightbulb.ext import tungsten
 from dotenv import load_dotenv
 from os import getenv
 from datetime import datetime
-from re import match
+from re import L, match
 
 # --------- Functions---------- #
 
@@ -28,15 +28,14 @@ async def on_error(event: lightbulb.CommandErrorEvent):
     if isinstance(event.exception, lightbulb.CommandInvocationError):
         await event.context.respond(f"""Une erreur est survenue lors de l'invocation de la commande `{event.context.command.name}`.
 Je le fais savoir à DarkblooM pour qu'il se penche sur ce cas.""")
-#         file = open(f"./error_logs/{datetime.today().strftime('%Y-%m-%d')}.txt", "a+")
-#         file.write(f"""{datetime.today().strftime('%H:%M:%S')}
-# Member: {event.context.member.username}{event.context.member.discriminator}
-# Command: {event.context.invoked.name}
-# Channel: {event.context.get_channel().name}
-# Cause: {event.exception.original}
+        with open(f"./error_logs/{datetime.today().strftime('%Y-%m-%d')}.txt", "a+") as file:
+            file.write(f"""{datetime.today().strftime('%H:%M:%S')}
+Member: {event.context.member.username}{event.context.member.discriminator}
+Command: {event.context.invoked.name}
+Channel: {event.context.get_channel().name}
+Cause: {event.exception.original}
 
-# """)
-#         file.close()
+""")
     raise event.exception
 
 # New member listener
