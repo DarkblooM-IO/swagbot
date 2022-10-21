@@ -57,7 +57,7 @@ async def apropos(ctx):
     embed = (
         hikari.Embed(title=f"Swagbot (v{botversion})", description="Bot multifonction développé pour la communauté de MamanSwag", color="#FF33BC")
         .add_field("Auteur", "DarkblooM#8472")
-        .add_field("Langage", "Python")
+        .add_field("Code source", "https://github.com/DarkblooM-SR/swagbot")
     )
     await ctx.respond(embed)
     return
