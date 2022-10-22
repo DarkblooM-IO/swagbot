@@ -21,7 +21,7 @@ def getUserIdFromArg(arg):
 load_dotenv()
 bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL)
 botuser = bot.get_me()
-botversion = "1.0.0"
+botversion = "beta1.0.0"
 embedColor = "#FF33BC"
 
 # --------- Listeners --------- #
@@ -45,9 +45,9 @@ Cause: {event.exception.original}
 # New member listener
 @bot.listen(hikari.MemberCreateEvent)
 async def new_member(event: hikari.MemberCreateEvent):
-    channel = await event.app.rest.fetch_channel(1031689089382109226)
+    channel = await event.app.rest.fetch_channel(int(getenv("WELCOME_CHANNEL")))
     content = f"Hey <@{event.user_id}> ! Bienvenue chez la Swag Family !"
-    await event.app.rest.add_role_to_member(event.get_guild(), event.member, 1033181938128789656)
+    await event.app.rest.add_role_to_member(event.get_guild(), event.member, int(getenv("WELCOME_ROLE")))
     await event.app.rest.create_message(channel=channel, content=content, attachment=event.member.avatar_url)
     return
 
@@ -71,11 +71,11 @@ async def apropos(ctx):
 @lightbulb.command('patchnote', 'Informations sur le dernier patch')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def patchnote(ctx):
-    embed = (
-        hikari.Embed(title="Patch note", color=embedColor)
-        .add_field("Version", botversion)
-        .add_field("Contenu", "Rien pour l'instant !")
-    )
+    embed = hikari.Embed(title="Patch note", color=embedColor)
+    embed.add_field("Version", botversion)
+    if "beta" in botversion:
+        embed.add_field("Disclaimer", "Je suis encore en beta ! Il se peut que je ne fonctionne pas toujours corrèctement, alors soyez patients avec moi.")
+    embed.add_field("Contenu", "Lancement du bot")
     await ctx.respond(embed)
     return
 
@@ -93,6 +93,11 @@ async def social(ctx):
 Visite aussi le site web !
 <https://mamanswag.tv/>""")
     return
+
+# Loading from the extensions folder
+# Contains:
+#   - Viewer custom commands
+bot.load_extensions_from("extensions")
 
 # ----- Argument commands ----- #
 
