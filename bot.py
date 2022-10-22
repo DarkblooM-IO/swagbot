@@ -7,7 +7,7 @@ from lightbulb.ext import tungsten
 from dotenv import load_dotenv
 from os import getenv
 from datetime import datetime
-from re import L, match
+from re import match
 
 # --------- Functions---------- #
 
