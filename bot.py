@@ -11,7 +11,10 @@ from re import L, match
 
 # --------- Functions---------- #
 
-# Wow, such empty
+def getUserIdFromArg(arg):
+    if not match(r"^<@\d+>$", arg):
+        return None
+    return int(arg[2:len(arg) - 1])
 
 # ---------- Globals ---------- #
 
@@ -19,6 +22,7 @@ load_dotenv()
 bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL)
 botuser = bot.get_me()
 botversion = "1.0.0"
+embedColor = "#FF33BC"
 
 # --------- Listeners --------- #
 
@@ -54,9 +58,22 @@ async def new_member(event: hikari.MemberCreateEvent):
 @lightbulb.implements(lightbulb.SlashCommand)
 async def apropos(ctx):
     embed = (
-        hikari.Embed(title=f"Swagbot (v{botversion})", description="Bot multifonction développé pour la communauté de MamanSwag", color="#FF33BC")
+        hikari.Embed(title=f"Swagbot (v{botversion})", description="Bot multifonction développé pour la communauté de MamanSwag", color=embedColor)
         .add_field("Auteur", "DarkblooM#8472")
         .add_field("Code source", "https://github.com/DarkblooM-SR/swagbot")
+    )
+    await ctx.respond(embed)
+    return
+
+# Patch note command
+@bot.command
+@lightbulb.command('patchnote', 'Informations sur le dernier patch')
+@lightbulb.implements(lightbulb.SlashCommand)
+async def patchnote(ctx):
+    embed = (
+        hikari.Embed(title="Patch note", color=embedColor)
+        .add_field("Version", botversion)
+        .add_field("Contenu", "Rien pour l'instant !")
     )
     await ctx.respond(embed)
     return
@@ -84,10 +101,10 @@ Visite aussi le site web !
 @lightbulb.command("avatar", "Récupère l'avatar d'un membre du serveur")
 @lightbulb.implements(lightbulb.SlashCommand)
 async def avatar(ctx):
-    if not match(r"^<@\d+>$", ctx.options.membre):
-        await ctx.respond("L'argument reçu n'est pas un membre du serveur")
+    id = getUserIdFromArg(ctx.options.membre)
+    if id == None:
+        await ctx.respond("L'argument reçu n'est pas un membre")
         return
-    id = int(ctx.options.membre[2:len(ctx.options.membre) - 1])
     user = ctx.app.cache.get_user(id)
     if user == None:
         user = await ctx.app.rest.get_user(id)
