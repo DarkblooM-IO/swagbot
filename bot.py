@@ -3,27 +3,15 @@
 # --------- Libraries --------- #
 
 import hikari, lightbulb
-from lightbulb.ext import tungsten
 from dotenv import load_dotenv
 from os import getenv
 from datetime import datetime
 from re import match
-from pyfiglet import Figlet
-
-# --------- Functions---------- #
-
-def getUserIdFromArg(arg):
-    if not match(r"^<@\d+>$", arg):
-        return None
-    return int(arg[2:len(arg) - 1])
 
 # ---------- Globals ---------- #
 
 load_dotenv()
 bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL, prefix="!")
-botuser = bot.get_me()
-botversion = "beta1.0.0"
-embedColor = "#FF33BC"
 
 # --------- Listeners --------- #
 
@@ -52,105 +40,9 @@ async def new_member(event: hikari.MemberCreateEvent):
     await event.app.rest.create_message(channel=channel, content=content, attachment=event.member.avatar_url)
     return
 
-# ------ Single commands ------ #
+# ------- Load Commands ------- #
 
-# About command
-@bot.command
-@lightbulb.command('apropos', 'À propos de Swagbot')
-@lightbulb.implements(lightbulb.SlashCommand)
-async def apropos(ctx):
-    embed = (
-        hikari.Embed(title=f"Swagbot (v{botversion})", description="Bot multifonction développé pour la communauté de MamanSwag", color=embedColor)
-        .add_field("Auteur", "DarkblooM#8472")
-        .add_field("Code source", "https://github.com/DarkblooM-SR/swagbot")
-    )
-    await ctx.respond(embed)
-    return
-
-# Patch note command
-@bot.command
-@lightbulb.command('patchnote', 'Informations sur le dernier patch')
-@lightbulb.implements(lightbulb.SlashCommand)
-async def patchnote(ctx):
-    embed = hikari.Embed(title="Patch note", color=embedColor)
-    embed.add_field("Version", botversion)
-    if "beta" in botversion:
-        embed.add_field("Disclaimer", "Je suis encore en beta ! Il se peut que je ne fonctionne pas toujours corrèctement, alors soyez patients avec moi.")
-    embed.add_field("Contenu", "Lancement du bot")
-    await ctx.respond(embed)
-    return
-
-# Social command
-@bot.command
-@lightbulb.command('social', 'Les liens utiles')
-@lightbulb.implements(lightbulb.SlashCommand)
-async def social(ctx):
-    await ctx.respond("""Suis MamanSwag partout !
-**__Twitch__ :** <https://twitch.tv/mamanswag>
-**__YouTube__ :** <https://youtube.com/c/MamanSwag>
-**__Twitter__ :** <https://twitter.com/SwagMaman>
-**__TikTokk__ :** <https://www.tiktok.com/@mamanswag>
-
-Visite aussi le site web !
-<https://mamanswag.tv/>""")
-    return
-
-# Loading from the extensions folder
-# Contains:
-#   - Viewer custom commands
 bot.load_extensions_from("extensions")
-
-# ----- Argument commands ----- #
-
-# Avatar command
-@bot.command
-@lightbulb.option("membre", "Le membre dont tu veux récupếrer l'avatar")
-@lightbulb.command("avatar", "Récupère l'avatar d'un membre du serveur")
-@lightbulb.implements(lightbulb.SlashCommand)
-async def avatar(ctx):
-    id = getUserIdFromArg(ctx.options.membre)
-    if id == None:
-        await ctx.respond("L'argument reçu n'est pas un membre")
-        return
-    user = ctx.app.cache.get_user(id)
-    if user == None:
-        user = await ctx.app.rest.get_user(id)
-    await ctx.respond(attachment=user.avatar_url)
-    return
-
-# Idea submission command
-@bot.command
-@lightbulb.option("déscription", "Décris ton idée en quelques mots", required=False)
-@lightbulb.option("idée", "Quelle est ton idée ?")
-@lightbulb.option("pseudo", "Comment t'appelles-tu ?")
-@lightbulb.command("idée", "Une idée de commande ou de fonctionnalité ? Tu peux la partager avec DarkblooM !")
-@lightbulb.implements(lightbulb.SlashCommand)
-async def idea(ctx):
-    with open(f"./ideas/{datetime.today().strftime('%Y-%m-%d')}.txt", "a+") as file:
-        file.write(f"""{datetime.today().strftime('%H:%M:%S')}
-From: {ctx.options.pseudo}
-Idea: {ctx.options.idée}
-Description: {ctx.options.déscription}
-
-""")
-    await ctx.respond("Ton idée a bien été enregistrée, merci à toi ! :blush:")
-    return
-
-# Figlet command
-@bot.command
-@lightbulb.option("texte", "Le texte que tu veux transformer")
-@lightbulb.command("figlet", "Transforme du texte en lettres géantes")
-@lightbulb.implements(lightbulb.SlashCommand)
-async def figlet(ctx):
-    await ctx.respond(f""":warning: Rend moins bien sur mobile
-```
-{Figlet().renderText(ctx.options.texte)}
-```""")
-    return
-
-# ------ Command groups ------ #
-
-# Wow, such empty
 
 # ---------- Run bot ---------- #
 
