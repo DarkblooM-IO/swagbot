@@ -56,6 +56,24 @@ async def reload(ctx):
     await ctx.respond("Reloaded successfully")
     return
 
+# --- Introduction sequence --- #
+
+# This is to be used once, then removed from the build after the bot has been launched
+from time import sleep
+from pyfiglet import Figlet
+@bot.listen(hikari.MessageCreateEvent)
+async def introduction(event: hikari.MessageCreateEvent):
+    if event.author_id == int(getenv("OWNER")) and event.message.content == "présente toi" and event.channel_id == int(getenv("INTRODUCTION_CHANNEL")):
+        sleep(1.0)
+        await event.message.respond("https://tenor.com/view/hello-gif-25128806")
+        sleep(1.0)
+        await event.message.respond("Salut la compagnie !")
+        sleep(1.0)
+        await event.message.respond("Moi c'est")
+        sleep(.5)
+        await event.message.respond(f"```\n{Figlet(font='slant').renderText('Swagbot')}\n```")
+    return
+
 # ---------- Run bot ---------- #
 
 bot.run()
