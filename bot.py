@@ -117,6 +117,24 @@ async def avatar(ctx):
     await ctx.respond(attachment=user.avatar_url)
     return
 
+# Idea submission command
+@bot.command
+@lightbulb.option("déscription", "Décris ton idée en quelques mots", required=False)
+@lightbulb.option("idée", "Quelle est ton idée ?")
+@lightbulb.option("pseudo", "Comment t'appelles-tu ?")
+@lightbulb.command("idée", "Une idée de commande ou de fonctionnalité ? Tu peux la partager avec DarkblooM !")
+@lightbulb.implements(lightbulb.SlashCommand)
+async def idea(ctx):
+    with open(f"./ideas/{datetime.today().strftime('%Y-%m-%d')}.txt", "a+") as file:
+        file.write(f"""{datetime.today().strftime('%H:%M:%S')}
+From: {ctx.options.pseudo}
+Idea: {ctx.options.idée}
+Description: {ctx.options.déscription}
+
+""")
+    await ctx.respond("Ton idée a bien été enregistrée, merci à toi ! :blush:")
+    return
+
 # ------ Command groups ------ #
 
 # Wow, such empty

@@ -1,0 +1,6 @@
+.env
+doc.txt
+__pycache__/
+testerror_command.py
+error_logs/
+ideas/
