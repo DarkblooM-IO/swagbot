@@ -34,7 +34,7 @@ Cause: {event.exception.original}
 @bot.listen(hikari.MemberCreateEvent)
 async def new_member(event: hikari.MemberCreateEvent):
     channel = await event.app.rest.fetch_channel(int(getenv("WELCOME_CHANNEL")))
-    content = f"Hey <@{event.user_id}> ! Bienvenue chez la Swag Family !"
+    content = f"Hey {event.user.mention} ! Bienvenue chez la Swag Family !"
     await event.app.rest.add_role_to_member(event.get_guild(), event.member, int(getenv("WELCOME_ROLE")))
     await event.app.rest.create_message(channel=channel, content=content, attachment=event.member.avatar_url)
     return
@@ -42,6 +42,17 @@ async def new_member(event: hikari.MemberCreateEvent):
 # ------- Load Commands ------- #
 
 bot.load_extensions_from("extensions")
+
+# - Extensions reload command - #
+
+@bot.command
+@lightbulb.command("reload", "reload")
+@lightbulb.implements(lightbulb.PrefixCommand)
+async def reload(ctx):
+    if ctx.author.id == int(getenv("OWNER")):
+        bot.reload_extensions(*bot.extensions)
+        await ctx.respond("Reloaded successfully")
+    return
 
 # ---------- Run bot ---------- #
 

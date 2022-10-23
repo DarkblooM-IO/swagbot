@@ -65,3 +65,6 @@ async def figlet(ctx):
 
 def load(bot):
     bot.add_plugin(plugin)
+
+def unload(bot):
+    bot.remove_plugin(plugin)
