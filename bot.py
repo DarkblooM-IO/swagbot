@@ -19,7 +19,7 @@ def getUserIdFromArg(arg):
 # ---------- Globals ---------- #
 
 load_dotenv()
-bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL)
+bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL, prefix="!")
 botuser = bot.get_me()
 botversion = "beta1.0.0"
 embedColor = "#FF33BC"
