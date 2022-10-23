@@ -28,6 +28,8 @@ Channel: {event.context.get_channel().name}
 Cause: {event.exception.original}
 
 """)
+    elif isinstance(event.exception, lightbulb.MissingRequiredPermission):
+        await event.context.respond("Désolé, je ne crois pas que tu ai le droit de faire ça")
     raise event.exception
 
 # New member listener
