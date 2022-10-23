@@ -6,7 +6,6 @@ import hikari, lightbulb
 from dotenv import load_dotenv
 from os import getenv
 from datetime import datetime
-from re import match
 
 # ---------- Globals ---------- #
 
