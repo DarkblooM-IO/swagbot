@@ -46,12 +46,12 @@ bot.load_extensions_from("extensions")
 # - Extensions reload command - #
 
 @bot.command
+@lightbulb.add_checks(lightbulb.checks.has_role_permissions(hikari.Permissions().ADMINISTRATOR))
 @lightbulb.command("reload", "reload")
 @lightbulb.implements(lightbulb.PrefixCommand)
 async def reload(ctx):
-    if ctx.author.id == int(getenv("OWNER")):
-        bot.reload_extensions(*bot.extensions)
-        await ctx.respond("Reloaded successfully")
+    bot.reload_extensions(*bot.extensions)
+    await ctx.respond("Reloaded successfully")
     return
 
 # ---------- Run bot ---------- #
