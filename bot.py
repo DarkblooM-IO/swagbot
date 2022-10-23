@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from os import getenv
 from datetime import datetime
 from re import match
+from pyfiglet import Figlet
 
 # --------- Functions---------- #
 
@@ -133,6 +134,18 @@ Description: {ctx.options.déscription}
 
 """)
     await ctx.respond("Ton idée a bien été enregistrée, merci à toi ! :blush:")
+    return
+
+# Figlet command
+@bot.command
+@lightbulb.option("texte", "Le texte que tu veux transformer")
+@lightbulb.command("figlet", "Transforme du texte en lettres géantes")
+@lightbulb.implements(lightbulb.SlashCommand)
+async def figlet(ctx):
+    await ctx.respond(f""":warning: Rend moins bien sur mobile
+```
+{Figlet().renderText(ctx.options.texte)}
+```""")
     return
 
 # ------ Command groups ------ #
