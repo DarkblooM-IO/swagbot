@@ -25,7 +25,7 @@ Le bot le plus **swag** de la Terre !"""
         .add_field("Mais qui es-tu ?", "Je suis un bot multifonction conçu par DarkblooM#8472 pour la communauté de MamanSwag.")
         .add_field("Qu'est-ce que tu peux faire ?", "Je possède une variété de commandes utilitaires, ainsi qu'une fonction pour acceuillir les nouveaux membres du serveur.\nJ'ai également été consulter mon confrère WizeBot pour me procurer les commandes personnalisées disponibles sur Twitch. Si vous avez une commande de ce genre qui contient du texte, vous pouvez la lancer avec le préfix habituel `!`.")
         .add_field("Où puis-je trouver tes commandes ?", "Simplement en entrant un `/` dans la barre de chat, un menu contextuel s'ouvre contenant toutes les commandes disponibles sur ce serveur. Vous pouvez trouver les miennes en cliquant sur mon icône dans la liste verticale à gauche.")
-        .add_field("Où puis-je proposer une fonctionnalité ?", "Sur Github !\nTu peux faire une demande ici : https://github.com/DarkblooM-SR/swagbot/issues\nSi tu es développeur.euse, tu peux créer un plugin Lightbulb et ouvrir une demande pull : https://github.com/DarkblooM-SR/swagbot/pulls")
+        .add_field("Où puis-je proposer une fonctionnalité ?", "Sur Github !\nTu peux faire une demande ici : https://github.com/DarkblooM-SR/swagbot/issues\nSi tu es développeur.euse, tu peux créer un plugin Lightbulb et ouvrir une demande de pull : https://github.com/DarkblooM-SR/swagbot/pulls")
         .set_footer("Pour toute question non-répondue ou toute demande à propos de Swagbot, merci de contacter DarkblooM#8472.")
     )
     await ctx.respond(embed)
@@ -75,6 +75,14 @@ Pourquoi ? Car tu vas donner un tout autre sens à mes lives !! :wink:""")
 async def epic(ctx):
     await ctx.respond("""CODE CRÉATEUR : mamanswag
 Merci pour ton soutien :heartpulse: :hugging:""")
+    return
+
+# Stream schedule command
+@plugin.command
+@lightbulb.command("prog", "Ne manque plus aucun live !")
+@lightbulb.implements(lightbulb.SlashCommand)
+async def prog(ctx):
+    await ctx.respond(":arrow_forward: Maman streame tous les soirs de 22h à 00h | :pause_button: le mardi | Restez à l'affut pour des streams sauvages certains aprems :upside_down:")
     return
 
 def load(bot):
