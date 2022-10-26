@@ -3,8 +3,17 @@ import hikari, lightbulb
 from dotenv import load_dotenv
 from os import getenv
 from variables import botversion, embedcolor
+from secrets import randbelow
 
 load_dotenv()
+
+def rand(min: int, max: int) -> int|bool:
+	if min > max:
+		return False
+	while True:
+		output = randbelow(max + 1)
+		if output >= min:
+			return output
 
 plugin = lightbulb.Plugin("single_commands")
 
@@ -87,6 +96,20 @@ async def feedback(ctx):
         .add_field(name="Pour les développeurs", value="Une idée de commande ou de fonctionnalité ? Tu peux créer un plugin Lightbulb et faire une demande de pull, je reviendrai vers toi si je suis intéressé :\n**__Pull requests__ :** https://github.com/DarkblooM-SR/swagbot/pulls\n**__Documentation Lightbulb__ :** https://hikari-lightbulb.readthedocs.io/en/latest/")
     )
     await ctx.respond(embed)
+    return
+
+# Random password command
+@plugin.command
+@lightbulb.command("mdp", "Génère un mot de passe aléatoire")
+@lightbulb.implements(lightbulb.SlashCommand)
+async def mdp(ctx):
+    output = ""
+    for n in range(16):
+        i = rand(33, 126)
+        if i != 96:
+            output = output+chr(i)
+    await ctx.author.send(f"```\n{output}\n```")
+    await ctx.respond("Check tes messages privés !")
     return
 
 def load(bot):
