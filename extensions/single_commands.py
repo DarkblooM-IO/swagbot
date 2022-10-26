@@ -2,7 +2,6 @@
 import hikari, lightbulb
 from dotenv import load_dotenv
 from os import getenv
-from pyfiglet import Figlet
 from variables import botversion, embedcolor
 
 load_dotenv()
