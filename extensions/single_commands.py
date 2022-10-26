@@ -3,12 +3,9 @@ import hikari, lightbulb
 from dotenv import load_dotenv
 from os import getenv
 from pyfiglet import Figlet
+from bot import botversion, embedcolor
 
 plugin = lightbulb.Plugin("single_commands")
-
-load_dotenv()
-botversion = getenv("VERSION")
-embedColor = f"#{getenv('EMBEDCOLOR')}"
 
 # About command
 @plugin.command
@@ -16,7 +13,7 @@ embedColor = f"#{getenv('EMBEDCOLOR')}"
 @lightbulb.implements(lightbulb.SlashCommand)
 async def apropos(ctx):
     embed = (
-        hikari.Embed(title=f"Swagbot (v{botversion})", description="Le bot le plus **swag** de la Terre !", color=embedColor)
+        hikari.Embed(title=f"Swagbot (v{botversion})", description="Le bot le plus **swag** de la Terre !", color=embedcolor)
         .add_field("Mais qui es-tu ?", "Je suis un bot multifonction conçu par DarkblooM#8472 pour la communauté de MamanSwag.")
         .add_field("Qu'est-ce que tu peux faire ?", "Je possède une variété de commandes utilitaires, ainsi qu'une fonction pour acceuillir les nouveaux membres du serveur.\nJ'ai également été consulter mon confrère WizeBot pour me procurer les commandes personnalisées disponibles sur Twitch. Si vous avez une commande de ce genre qui contient du texte, vous pouvez la lancer avec le préfix habituel `!`.")
         .add_field("Où puis-je trouver tes commandes ?", "Simplement en entrant un `/` dans la barre de chat, un menu contextuel s'ouvre contenant toutes les commandes disponibles sur ce serveur. Vous pouvez trouver les miennes en cliquant sur mon icône dans la liste verticale à gauche.")
@@ -31,7 +28,7 @@ async def apropos(ctx):
 @lightbulb.command('patchnote', 'Informations sur le dernier patch')
 @lightbulb.implements(lightbulb.SlashCommand)
 async def patchnote(ctx):
-    embed = hikari.Embed(title="Patch note", color=embedColor)
+    embed = hikari.Embed(title="Patch note", color=embedcolor)
     embed.add_field("Version", botversion)
     if "beta" in botversion:
         embed.add_field("Disclaimer", "Je suis encore en beta ! Il se peut que je ne fonctionne pas toujours corrèctement, alors soyez patients avec moi.")

@@ -5,6 +5,7 @@ from os import getenv
 from datetime import datetime
 from re import match
 from pyfiglet import Figlet
+from bot import botversion, embedcolor
 
 def getUserIdFromArg(arg):
     if not match(r"^<@\d+>$", arg):
@@ -12,10 +13,6 @@ def getUserIdFromArg(arg):
     return int(arg[2:len(arg) - 1])
 
 plugin = lightbulb.Plugin("single_commands")
-
-load_dotenv()
-botversion = getenv("VERSION")
-embedColor = f"#{getenv('EMBEDCOLOR')}"
 
 # Avatar command
 @plugin.command
