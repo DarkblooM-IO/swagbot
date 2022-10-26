@@ -11,8 +11,6 @@ from datetime import datetime
 
 load_dotenv()
 bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL, prefix="!")
-botversion = "beta1.0.0"
-embedcolor = "#FF33BC"
 
 # --------- Listeners --------- #
 

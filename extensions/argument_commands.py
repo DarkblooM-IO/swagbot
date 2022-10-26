@@ -5,7 +5,7 @@ from os import getenv
 from datetime import datetime
 from re import match
 from pyfiglet import Figlet
-from bot import botversion, embedcolor
+from variables import botversion, embedcolor
 
 load_dotenv()
 

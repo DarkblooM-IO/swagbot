@@ -3,7 +3,7 @@ import hikari, lightbulb
 from dotenv import load_dotenv
 from os import getenv
 from pyfiglet import Figlet
-from bot import botversion, embedcolor
+from variables import botversion, embedcolor
 
 load_dotenv()
 
@@ -19,7 +19,6 @@ async def apropos(ctx):
         .add_field("Mais qui es-tu ?", "Je suis un bot multifonction conçu par DarkblooM#8472 pour la communauté de MamanSwag.")
         .add_field("Qu'est-ce que tu peux faire ?", "Je possède une variété de commandes utilitaires, ainsi qu'une fonction pour acceuillir les nouveaux membres du serveur.\nJ'ai également été consulter mon confrère WizeBot pour me procurer les commandes personnalisées disponibles sur Twitch. Si vous avez une commande de ce genre qui contient du texte, vous pouvez la lancer avec le préfix habituel `!`.")
         .add_field("Où puis-je trouver tes commandes ?", "Simplement en entrant un `/` dans la barre de chat, un menu contextuel s'ouvre contenant toutes les commandes disponibles sur ce serveur. Vous pouvez trouver les miennes en cliquant sur mon icône dans la liste verticale à gauche.")
-        .add_field("Où puis-je proposer une fonctionnalité ?", "Sur Github !\nTu peux faire une demande ici : https://github.com/DarkblooM-SR/swagbot/issues\nSi tu es développeur.euse, tu peux créer un plugin Lightbulb et ouvrir une demande de pull : https://github.com/DarkblooM-SR/swagbot/pulls")
         .set_footer("Pour toute question non-répondue ou toute demande à propos de Swagbot, merci de contacter DarkblooM#8472.")
     )
     await ctx.respond(embed)
@@ -77,6 +76,18 @@ Merci pour ton soutien :heartpulse: :hugging:""")
 @lightbulb.implements(lightbulb.SlashCommand)
 async def prog(ctx):
     await ctx.respond(":arrow_forward: Maman streame tous les soirs de 22h à 00h | :pause_button: le mardi | Restez à l'affut pour des streams sauvages certains aprems :upside_down:")
+    return
+
+# Feedback command
+@plugin.command
+@lightbulb.command("feedback", "Ton avis m'intéresse !")
+@lightbulb.implements(lightbulb.SlashCommand)
+async def feedback(ctx):
+    embed = (
+        hikari.Embed(title="Ton avis m'intéresse !", description="Une question ? Une proposition ? Ou tout simplement un avis à donner ? Ça se passe sur Github :\nhttps://github.com/DarkblooM-SR/swagbot/issues", color=embedcolor)
+        .add_field(name="Pour les développeurs", value="Une idée de commande ou de fonctionnalité ? Tu peux créer un plugin Lightbulb et faire une demande de pull, je reviendrai vers toi si je suis intéressé :\n**__Pull requests__ :** https://github.com/DarkblooM-SR/swagbot/pulls\n**__Documentation Lightbulb__ :** https://hikari-lightbulb.readthedocs.io/en/latest/")
+    )
+    await ctx.respond(embed)
     return
 
 def load(bot):
