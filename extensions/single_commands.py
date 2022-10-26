@@ -5,6 +5,8 @@ from os import getenv
 from pyfiglet import Figlet
 from bot import botversion, embedcolor
 
+load_dotenv()
+
 plugin = lightbulb.Plugin("single_commands")
 
 # About command

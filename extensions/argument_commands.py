@@ -7,6 +7,8 @@ from re import match
 from pyfiglet import Figlet
 from bot import botversion, embedcolor
 
+load_dotenv()
+
 def getUserIdFromArg(arg):
     if not match(r"^<@\d+>$", arg):
         return None
