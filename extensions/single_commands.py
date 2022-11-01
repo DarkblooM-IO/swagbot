@@ -112,14 +112,6 @@ async def mdp(ctx):
     await ctx.respond("Check tes messages privés !")
     return
 
-# Temporary test command
-@plugin.command
-@lightbulb.command("ping", "ping")
-@lightbulb.implements(lightbulb.SlashCommand)
-async def ping(ctx):
-    await ctx.respond("Pong!")
-    return
-
 def load(bot):
     bot.add_plugin(plugin)
 
