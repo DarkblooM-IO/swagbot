@@ -37,7 +37,6 @@ Cause: {event.exception.original}
 async def new_member(event: hikari.MemberCreateEvent):
     channel = await event.app.rest.fetch_channel(int(getenv("WELCOME_CHANNEL")))
     content = f"Hey {event.user.mention} ! Bienvenue chez la Swag Family !"
-    await event.app.rest.add_role_to_member(event.get_guild(), event.member, int(getenv("WELCOME_ROLE")))
     await event.app.rest.create_message(channel=channel, content=content, attachment=event.member.avatar_url)
     return
 
