@@ -36,7 +36,7 @@ Cause: {event.exception.original}
 @bot.listen(hikari.MemberCreateEvent)
 async def new_member(event: hikari.MemberCreateEvent):
     channel = await event.app.rest.fetch_channel(int(getenv("WELCOME_CHANNEL")))
-    content = f"Hey {event.user.mention} ! Bienvenue chez la Swag Family !"
+    content = f"Hey {event.user.username} ! Bienvenue chez la Swag Family !"
     await event.app.rest.create_message(channel=channel, content=content, attachment=event.member.avatar_url)
     return
 
