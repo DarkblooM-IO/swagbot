@@ -41,7 +41,7 @@ async def patchnote(ctx):
     embed.add_field("Version", botversion)
     if "beta" in botversion:
         embed.add_field("Disclaimer", "Je suis encore en beta ! Il se peut que je ne fonctionne pas toujours corrèctement, alors soyez patients avec moi.")
-    embed.add_field("Contenu", "Lancement du bot")
+    embed.add_field("Contenu", "Message de bienvenue mis à jour")
     await ctx.respond(embed)
     return
 
