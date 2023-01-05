@@ -7,13 +7,8 @@ from secrets import randbelow
 
 load_dotenv()
 
-def rand(min: int, max: int) -> int|bool:
-	if min > max:
-		return False
-	while True:
-		output = randbelow(max + 1)
-		if output >= min:
-			return output
+def rand(min: int, max: int) -> int:
+    return min + randbelow((max - min) + 1)
 
 plugin = lightbulb.Plugin("single_commands")
 
