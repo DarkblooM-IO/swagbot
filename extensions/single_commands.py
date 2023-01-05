@@ -2,7 +2,7 @@
 import hikari, lightbulb
 from dotenv import load_dotenv
 from os import getenv
-from variables import botversion, embedcolor
+from variables import *
 from secrets import randbelow
 
 load_dotenv()
@@ -36,7 +36,7 @@ async def patchnote(ctx):
     embed.add_field("Version", botversion)
     if "beta" in botversion:
         embed.add_field("Disclaimer", "Je suis encore en beta ! Il se peut que je ne fonctionne pas toujours corrèctement, alors soyez patients avec moi.")
-    embed.add_field("Contenu", "Message de bienvenue mis à jour")
+    embed.add_field("Contenu", patchnote)
     await ctx.respond(embed)
     return
 
