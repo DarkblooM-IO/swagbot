@@ -1,15 +1,14 @@
-#!/usr/bin/python3
 import hikari, lightbulb
 from dotenv import load_dotenv
 from os import getenv
 from datetime import datetime
 from re import match
 from pyfiglet import Figlet
-from variables import botversion, embedcolor
+from variables import *
 
 load_dotenv()
 
-def getUserIdFromArg(arg):
+def getUserIdFromArg(arg) -> int | None:
     if not match(r"^<@\d+>$", arg):
         return None
     return int(arg[2:len(arg) - 1])
@@ -21,7 +20,7 @@ plugin = lightbulb.Plugin("single_commands")
 @lightbulb.option("membre", "Le membre dont tu veux récupếrer l'avatar")
 @lightbulb.command("avatar", "Récupère l'avatar d'un membre du serveur")
 @lightbulb.implements(lightbulb.SlashCommand)
-async def avatar(ctx):
+async def avatar(ctx) -> None:
     id = getUserIdFromArg(ctx.options.membre)
     if id == None:
         await ctx.respond("L'argument reçu n'est pas un membre")
@@ -37,7 +36,7 @@ async def avatar(ctx):
 @lightbulb.option("texte", "Le texte que tu veux transformer")
 @lightbulb.command("figlet", "Transforme du texte en lettres géantes")
 @lightbulb.implements(lightbulb.SlashCommand)
-async def figlet(ctx):
+async def figlet(ctx) -> None:
     await ctx.respond(f""":warning: Rend moins bien sur mobile
 ```
 {Figlet().renderText(ctx.options.texte)}

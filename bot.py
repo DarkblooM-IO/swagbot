@@ -16,7 +16,7 @@ bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL, prefix
 
 # Error handler
 @bot.listen(lightbulb.CommandErrorEvent)
-async def on_error(event: lightbulb.CommandErrorEvent):
+async def on_error(event: lightbulb.CommandErrorEvent) -> None:
     if isinstance(event.exception, lightbulb.CommandInvocationError):
         await event.context.respond(f"""Une erreur est survenue lors de l'invocation de la commande `{event.context.command.name}`.
 Je le fais savoir à DarkblooM pour qu'il se penche sur ce cas.""")
@@ -34,7 +34,7 @@ Cause: {event.exception.original}
 
 # New member listener
 @bot.listen(hikari.MemberCreateEvent)
-async def new_member(event: hikari.MemberCreateEvent):
+async def new_member(event: hikari.MemberCreateEvent) -> None:
     channel = await event.app.rest.fetch_channel(int(getenv("WELCOME_CHANNEL")))
     content = f"Hey {event.user.username} ! Bienvenue chez la Swag Family !"
     await event.app.rest.create_message(channel=channel, content=content, attachment=event.member.avatar_url)
@@ -50,11 +50,12 @@ bot.load_extensions_from("extensions")
 @lightbulb.add_checks(lightbulb.checks.has_role_permissions(hikari.Permissions().ADMINISTRATOR))
 @lightbulb.command("reload", "reload")
 @lightbulb.implements(lightbulb.PrefixCommand)
-async def reload(ctx):
+async def reload(ctx) -> None:
     bot.reload_extensions(*bot.extensions)
     await ctx.respond("Reloaded successfully")
     return
 
 # ---------- Run bot ---------- #
 
-bot.run()
+if __name__ == '__main__':
+    bot.run()
