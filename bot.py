@@ -10,7 +10,7 @@ from datetime import datetime
 # ---------- Globals ---------- #
 
 load_dotenv()
-bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL, prefix="!")
+bot = lightbulb.BotApp(token=getenv('TOKEN'), intents=hikari.Intents.ALL, prefix="::")
 
 # --------- Listeners --------- #
 
